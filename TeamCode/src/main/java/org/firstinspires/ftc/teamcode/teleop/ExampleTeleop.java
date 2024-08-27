@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperstructureSubsystem;
 
 @TeleOp(name = "Lightning Example Teleop")
-public class LightningExampleTeleop extends LinearOpMode {
+public class ExampleTeleop extends LinearOpMode {
 
     //Gamepad bindings
     private GamepadEx Driver;
