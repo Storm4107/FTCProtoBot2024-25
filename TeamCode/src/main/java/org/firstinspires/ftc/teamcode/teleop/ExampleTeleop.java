@@ -5,11 +5,13 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import org.firstinspires.ftc.teamcode.subsystems.ApriltagHuskylens;
 import org.firstinspires.ftc.teamcode.subsystems.ApriltagUSBCamera;
 import org.firstinspires.ftc.teamcode.subsystems.ColorHuskylens;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.SingleServoPincher;
 import org.firstinspires.ftc.teamcode.subsystems.SuperstructureSubsystem;
 
 @TeleOp(name = "Lightning Example Teleop")
@@ -24,13 +26,13 @@ public class ExampleTeleop extends LinearOpMode {
     //subsystems
     private MecanumDriveSubsystem m_Drive;
     private SuperstructureSubsystem m_Superstructure;
-
+    private SingleServoPincher SingleServoPincher;
     private ApriltagHuskylens m_ATLens;
     private ColorHuskylens m_COLORLens;
     private ApriltagUSBCamera m_ATUSB;
 
 
-    @Override
+   // @Override
     public void runOpMode() {
         //Run when initializing
         m_Drive = new MecanumDriveSubsystem(hardwareMap, telemetry);
@@ -38,7 +40,7 @@ public class ExampleTeleop extends LinearOpMode {
         m_ATLens = new ApriltagHuskylens(hardwareMap, telemetry);
         m_COLORLens = new ColorHuskylens(hardwareMap, telemetry);
         m_ATUSB = new ApriltagUSBCamera(hardwareMap, telemetry);
-
+       // SingleServoPincher = new SingleServoPincher(hardwareMap, telemetry);
         Driver = new GamepadEx(gamepad1);
         Operator = new GamepadEx(gamepad2);
 
@@ -98,13 +100,36 @@ public class ExampleTeleop extends LinearOpMode {
 
                 }
 
-                //Pincher controls
+                //double Pincher controls
+                /*
                 if (Operator.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
                     m_Superstructure.Pincher.open();
+                    SingleServoPincher.leftServo.setPosition(.5);
                 }
 
+                //
                 if ((Operator.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.3)) {
                     m_Superstructure.Pincher.close();
+                    SingleServoPincher.leftServo.setPosition(.8);
+                }
+                */
+            
+                //single pincher controls
+                //
+                if (Operator.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+                    SingleServoPincher.leftServo.setPosition(.5);
+                }
+                //
+                if ((Operator.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.3)) {
+                    SingleServoPincher.leftServo.setPosition(.8);
+                }
+                //
+                 if (Operator.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
+                     SingleServoPincher.rightServo.setPosition(.5);
+                }
+                //
+                 if ((Operator.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.3)) {
+                     SingleServoPincher.rightServo.setPosition(.5);
                 }
 
                 telemetry.update();
