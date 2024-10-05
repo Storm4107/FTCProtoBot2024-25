@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SingleServoPincher;
 import org.firstinspires.ftc.teamcode.subsystems.SuperstructureSubsystem;
 
-@TeleOp(name = "Lightning Example Teleop")
+@TeleOp(name = "Example Teleop")
 public class ExampleTeleop extends LinearOpMode {
 
     //Gamepad bindings
