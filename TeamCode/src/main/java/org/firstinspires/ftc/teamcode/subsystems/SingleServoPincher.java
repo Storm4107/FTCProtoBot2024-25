@@ -8,7 +8,10 @@ public class SingleServoPincher {
     public Servo leftServo;
     public Servo rightServo;
 
-
+    public SingleServoPincher(HardwareMap Map, Telemetry telemetry) {
+        leftServo = Map.get(Servo.class, "leftServo");
+        rightServo = Map.get(Servo.class, "rightServo");
+    }
 
     public void LeftServoPos(Servo leftServo){
         this.leftServo = leftServo;

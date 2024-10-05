@@ -26,7 +26,7 @@ public class ExampleTeleop extends LinearOpMode {
     //subsystems
     private MecanumDriveSubsystem m_Drive;
     private SuperstructureSubsystem m_Superstructure;
-    private SingleServoPincher SingleServoPincher;
+    private SingleServoPincher m_SingleServoPincher;
     private ApriltagHuskylens m_ATLens;
     private ColorHuskylens m_COLORLens;
     private ApriltagUSBCamera m_ATUSB;
@@ -40,7 +40,7 @@ public class ExampleTeleop extends LinearOpMode {
         m_ATLens = new ApriltagHuskylens(hardwareMap, telemetry);
         m_COLORLens = new ColorHuskylens(hardwareMap, telemetry);
         m_ATUSB = new ApriltagUSBCamera(hardwareMap, telemetry);
-       // SingleServoPincher = new SingleServoPincher(hardwareMap, telemetry);
+        m_SingleServoPincher = new SingleServoPincher(hardwareMap,telemetry);
         Driver = new GamepadEx(gamepad1);
         Operator = new GamepadEx(gamepad2);
 
@@ -115,23 +115,26 @@ public class ExampleTeleop extends LinearOpMode {
                 */
             
                 //single pincher controls
-                //
+                //close pincher
                 if (Operator.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                    SingleServoPincher.leftServo.setPosition(.5);
+                    m_SingleServoPincher.leftServo.setPosition(.5);
                 }
-                //
+                //open pincher
                 if ((Operator.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.3)) {
-                    SingleServoPincher.leftServo.setPosition(.8);
+                    m_SingleServoPincher.leftServo.setPosition(.8);
                 }
-                //
+                //rotate clockwise (looking from back of arm)
                  if (Operator.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
-                     SingleServoPincher.rightServo.setPosition(.5);
+                     m_SingleServoPincher.rightServo.setPosition(.5);
                 }
-                //
+                //rotate counterclockwise (looking from back of arm)
                  if ((Operator.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.3)) {
-                     SingleServoPincher.rightServo.setPosition(.5);
+                     m_SingleServoPincher.rightServo.setPosition(.8);
                 }
-
+            telemetry.addData(
+                    "left servo", m_SingleServoPincher.leftServo.getPosition());
+            telemetry.addData(
+                    "right servo", m_SingleServoPincher.rightServo.getPosition());
                 telemetry.update();
             }
         }
