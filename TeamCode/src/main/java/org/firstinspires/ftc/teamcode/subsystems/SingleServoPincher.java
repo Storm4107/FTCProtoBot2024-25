@@ -21,10 +21,7 @@ public class SingleServoPincher {
         this.rightServo = rightServo;
     }
 
-    public void setLeftServos(double leftValue) {
-        leftServo.setPosition(leftValue);
-
-    }
+    public void setLeftServos(double leftValue) {leftServo.setPosition(leftValue);}
 
     public void setRightServos(double rightValue) {
         rightServo.setPosition(rightValue);
