@@ -44,7 +44,7 @@ public class ExampleArmAuto extends LinearOpMode {
         //use this to get your angles joystick does not have PID so feather joysticks
         //in a while loop so it keeps going I reccomend you turn off the 30sec timer also
         while(opModeIsActive()) {
-            m_Superstructure.Arm.setOutput(gamepad1.left_stick_y);
+            m_Superstructure.Arm.setOutput(-gamepad1.left_stick_y);
             telemetry.addData("ANGLE", m_Superstructure.Arm.getAngle());
             telemetry.update();
         }
