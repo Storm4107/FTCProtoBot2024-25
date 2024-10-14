@@ -116,9 +116,9 @@ public class ExampleTeleop extends LinearOpMode {
             
                 //single pincher controls
                 //close pincher
-                if (Operator.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                    m_SingleServoPincher.leftServo.setPosition(.5);
-                }
+               // if (Operator.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+               //     m_SingleServoPincher.leftServo.setPosition(.5);
+               // }
                 //open pincher
                 if ((Operator.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.3)) {
                     m_SingleServoPincher.leftServo.setPosition(.8);
