@@ -109,6 +109,14 @@ public class ExampleTeleopOverride extends LinearOpMode {
                         Operator.getRightY(),
                         Operator.getRightX());
 
+                //Driver controls
+                if (Driver.getButton(GamepadKeys.Button.Y)) {
+                    m_Drive.resetHeading();
+                }
+
+                //Drivetrain method
+                m_Drive.Drive(Driver.getLeftX(), Driver.getLeftY(), Driver.getRightX(), Driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
+
                 telemetry.addData(
                         "MANUAL INPUT ENABLED",
                         "LeftY = ARM, B = RightY, X = RightX.");
