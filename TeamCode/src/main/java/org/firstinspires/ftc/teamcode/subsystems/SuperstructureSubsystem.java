@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
@@ -12,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 
 public class SuperstructureSubsystem {
+
+    private GamepadEx Operator;
 
     public SingleMotorArm Wrist;
     public DoubleMotorArm Arm;
@@ -122,6 +125,11 @@ public class SuperstructureSubsystem {
         Elevator.setOutput(elevatorToggle ? input : 0);
     }
 
+    public void ManualInputTest(double ArmInput,double WristInput, double ElevatorInput) {
+        Arm.setOutput(ArmInput);
+        Wrist.setOutput(WristInput);
+        Elevator.setOutput(ElevatorInput);
+    }
     public void periodic() {
 
         Arm.armPeriodic();
