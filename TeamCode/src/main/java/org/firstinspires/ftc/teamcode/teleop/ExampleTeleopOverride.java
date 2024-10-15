@@ -41,7 +41,7 @@ public class ExampleTeleopOverride extends LinearOpMode {
         m_ATLens = new ApriltagHuskylens(hardwareMap, telemetry);
         m_COLORLens = new ColorHuskylens(hardwareMap, telemetry);
         m_ATUSB = new ApriltagUSBCamera(hardwareMap, telemetry);
-        m_SingleServoPincher = new SingleServoPincher(hardwareMap,telemetry);
+        m_SingleServoPincher = new SingleServoPincher(hardwareMap, telemetry);
         Driver = new GamepadEx(gamepad1);
         Operator = new GamepadEx(gamepad2);
 
@@ -51,48 +51,50 @@ public class ExampleTeleopOverride extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-                //Periodic Opmode
-                m_Superstructure.periodic();
-                m_ATLens.runHuskyLens();
-                m_COLORLens.runHuskyLens();
-                m_ATUSB.periodic();
+            //Periodic Opmode
+            m_Superstructure.periodic();
+            m_ATLens.runHuskyLens();
+            m_COLORLens.runHuskyLens();
+            m_ATUSB.periodic();
 
-                telemetry.addData(
-                        "Periodic currently running",
-                        "Operator can hold left bumper for manual arm control");
+            telemetry.addData(
+                    "Periodic currently running",
+                    "Operator can Press B to toggle to Overide Controls");
 
 
-                //IMU Reset button
-                if (Driver.getButton(GamepadKeys.Button.Y)) {
-                   m_Drive.resetHeading();
-                }
+            //IMU Reset button
+            if (Driver.getButton(GamepadKeys.Button.Y)) {
+                m_Drive.resetHeading();
+            }
 
-                //Drivetrain method
-                m_Drive.Drive(Driver.getLeftX(), Driver.getLeftY(), Driver.getRightX(), Driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
+            //Drivetrain method
+            m_Drive.Drive(Driver.getLeftX(), Driver.getLeftY(), Driver.getRightX(), Driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
 
-                //Superstructure preset - Zero everything
-                if (Operator.getButton(GamepadKeys.Button.BACK)) {
-                    m_Superstructure.zeroPreset();
-                }
+            //Superstructure preset - Zero everything
+            if (Operator.getButton(GamepadKeys.Button.BACK)) {
+                m_Superstructure.zeroPreset();
+            }
 
-                if (Operator.getButton(GamepadKeys.Button.A)) {
-                    m_Superstructure.pickupPreset();
-                }
+            if (Operator.getButton(GamepadKeys.Button.A)) {
+                m_Superstructure.pickupPreset();
+            }
 
-                if (Operator.getButton(GamepadKeys.Button.X)) {
-                    m_Superstructure.mediumPreset();
-                }
+            if (Operator.getButton(GamepadKeys.Button.X)) {
+                m_Superstructure.mediumPreset();
+            }
 
-                if (Operator.getButton(GamepadKeys.Button.Y)) {
-                    m_Superstructure.highPreset();
-                }
+            if (Operator.getButton(GamepadKeys.Button.Y)) {
+                m_Superstructure.highPreset();
+            }
 
-                //Superstructure manual input toggle - Triggered by holding holding left bumper
+            //Overide Controls handled by B toggle
             boolean BPressed = Operator.getButton(GamepadKeys.Button.B);
+            //checking the button state to the last state so you dont constanly change toggle
             if (BPressed && !BLastPress) {
-                overide=!overide;
+                //secondary stop to make sure toggle dosent get caught in a changing loop
+                overide = !overide;
                 if (overide)
-                  //servo controls
+                    //servo controls(open value,Close value, LeftOpen Control, LeftClose Control, Rotate Clockwise Control, and Rotate Counter ClockWise Control)
                     m_SingleServoPincher.test(
                             .8,
                             .5,
@@ -101,19 +103,24 @@ public class ExampleTeleopOverride extends LinearOpMode {
                             Operator.getButton(GamepadKeys.Button.RIGHT_BUMPER),
                             Operator.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.3);
 
-                  //Arm,wrist,and elevator controls
-                m_Superstructure.ManualInputTest(Operator.getLeftY(),Operator.getRightY(),Operator.getRightX());
-                }
+                //Arm,wrist,and elevator controls in that order
+                m_Superstructure.ManualInputTest(
+                        Operator.getLeftY(),
+                        Operator.getRightY(),
+                        Operator.getRightX());
 
-                BLastPress=BPressed;
+                telemetry.addData(
+                        "MANUAL INPUT ENABLED",
+                        "LeftY = ARM, B = RightY, X = RightX.");
+            }
+            //changing the button state outside the if loop
+            BLastPress = BPressed;
 
-                    telemetry.addData(
-                            "MANUAL INPUT ENABLED",
-                            "A = ARM, B = WRIST, X = ELEVATOR." + "USE LEFT STICK TO CONTROL INPUT");
 
-                }
 
-                //double Pincher controls
+
+
+        //double Pincher controls
                 /*
                 if (Operator.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
                     m_Superstructure.Pincher.open();
@@ -126,11 +133,9 @@ public class ExampleTeleopOverride extends LinearOpMode {
                     SingleServoPincher.leftServo.setPosition(.8);
                 }
                 */
-            
-                //single pincher controls
-                //close pincher
 
-        m_SingleServoPincher.test(
+        //single pincher controls(open value,Close value, LeftOpen Control, LeftClose Control, Rotate Clockwise Control, and Rotate Counter ClockWise Control)
+            m_SingleServoPincher.test(
                 .8,
                 .5,
                 Operator.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.3,
@@ -138,13 +143,13 @@ public class ExampleTeleopOverride extends LinearOpMode {
                 Operator.getButton(GamepadKeys.Button.RIGHT_BUMPER),
                 Operator.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.3);
 
-            telemetry.addData(
-                    "left servo", m_SingleServoPincher.leftServo.getPosition());
-            telemetry.addData(
-                    "right servo", m_SingleServoPincher.rightServo.getPosition());
-                telemetry.update();
+        telemetry.addData(
+                "left servo", m_SingleServoPincher.leftServo.getPosition());
+        telemetry.addData(
+                "right servo", m_SingleServoPincher.rightServo.getPosition());
+        telemetry.update();
 
-
+    }
         }
             }
 
