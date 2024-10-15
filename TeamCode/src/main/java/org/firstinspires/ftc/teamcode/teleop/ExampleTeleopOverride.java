@@ -105,7 +105,7 @@ public class ExampleTeleopOverride extends LinearOpMode {
                 m_Superstructure.ManualInputTest(Operator.getLeftY(),Operator.getRightY(),Operator.getRightX());
                 }
 
-            BLastPress=BPressed;
+                BLastPress=BPressed;
 
                     telemetry.addData(
                             "MANUAL INPUT ENABLED",
