@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SingleServoPincher;
 import org.firstinspires.ftc.teamcode.subsystems.SuperstructureSubsystem;
 
-@TeleOp(name = "Example Teleop")
+@TeleOp(name = "Example Teleop Override")
 public class ExampleTeleopOverride extends LinearOpMode {
 
     //Gamepad bindings
@@ -29,7 +29,9 @@ public class ExampleTeleopOverride extends LinearOpMode {
     private ApriltagHuskylens m_ATLens;
     private ColorHuskylens m_COLORLens;
     private ApriltagUSBCamera m_ATUSB;
-    boolean BLastPress;
+    boolean BLastPress = false;
+    boolean BPressed = Operator.getButton(GamepadKeys.Button.B);
+
     boolean overide;
 
 
@@ -87,13 +89,12 @@ public class ExampleTeleopOverride extends LinearOpMode {
                 m_Superstructure.highPreset();
             }
 
-            //Overide Controls handled by B toggle
-            boolean BPressed = Operator.getButton(GamepadKeys.Button.B);
+            if (BPressed && !BLastPress){
+                overide = false;
+            }
+                //Overide Controls handled by B toggle
             //checking the button state to the last state so you dont constanly change toggle
-            if (BPressed && !BLastPress) {
-                //secondary stop to make sure toggle dosent get caught in a changing loop
-                overide = !overide;
-                if (overide)
+            while (!overide) {
                     //servo controls(open value,Close value, LeftOpen Control, LeftClose Control, Rotate Clockwise Control, and Rotate Counter ClockWise Control)
                     m_SingleServoPincher.test(
                             .8,
@@ -120,9 +121,13 @@ public class ExampleTeleopOverride extends LinearOpMode {
                 telemetry.addData(
                         "MANUAL INPUT ENABLED",
                         "LeftY = ARM, B = RightY, X = RightX.");
+
+                if (BPressed && !BLastPress){
+                    overide = true;
+                }
             }
             //changing the button state outside the if loop
-            BLastPress = BPressed;
+            BPressed = BLastPress;
 
 
 
