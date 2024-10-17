@@ -62,7 +62,7 @@ public class SingleServoPincher {
     }
 
     public void test(double open, double close, boolean LeftOpen, boolean LeftClose, boolean CounterClockWise, Boolean ClockWise) {
-        if (LeftOpen)) {
+        if (LeftOpen) {
             leftServo.setPosition(open);
         }
         //open pincher
