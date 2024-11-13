@@ -82,6 +82,14 @@ public class SuperstructureSubsystem {
         Arm.setAngle(0);
         Elevator.setInches(0);
     }
+    //Sample preset - Brings all mechanisms to pickup
+    public void groundPickupPreset() {
+
+        Elevator.setInches(0);
+        pincher.open();
+        pincher.groundPickup();
+    }
+
 
     //Sample preset - Brings all mechanisms to high drop-off
     public void highPreset() {
